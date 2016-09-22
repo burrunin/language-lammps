@@ -1,0 +1,26 @@
+{
+  "context-menu": {
+    "atom-text-editor": [
+      {
+        "label": "Toggle language-lammps",
+        "command": "language-lammps:toggle"
+      }
+    ]
+  },
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "language-lammps",
+          "submenu": [
+            {
+              "label": "Toggle",
+              "command": "language-lammps:toggle"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

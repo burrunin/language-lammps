@@ -1,0 +1,85 @@
+'scopeName': 'source.lammps'
+'name': 'LAMMPS'
+'fileTypes': ['lmp', 'lammps']
+'patterns': [
+   {
+        'match': '\\b(?i:(0x\\h*)L)'
+        'name': 'constant.numeric.integer.long.hexadecimal.python'
+   }
+   {
+        'match': '\\b(?i:(0x\\h*))'
+        'name': 'constant.numeric.integer.hexadecimal.python'
+   }
+   {
+        'match': '\\b(?i:(0o?[0-7]+)L)'
+        'name': 'constant.numeric.integer.long.octal.python'
+   }
+   {
+        'match': '\\b(?i:(0o?[0-7]+))'
+        'name': 'constant.numeric.integer.octal.python'
+   }
+   {
+        'match': '\\b(?i:(0b[01]+)L)',
+        'name': 'constant.numeric.integer.long.binary.python'
+   }
+   {
+        'match': '\\b(?i:(0b[01]+))',
+        'name': 'constant.numeric.integer.binary.python'
+   }
+   {
+        'match': '\\b(?i:(((\\d+(\\.(?=[^a-zA-Z_])\\d*)?|(?<=[^0-9a-zA-Z_])\\.\\d+)(e[\\-\\+]?\\d+)?))J)'
+        'name': 'constant.numeric.complex.python'
+    }
+    {
+        'match': '\\b(?i:(\\d+\\.\\d*(e[\\-\\+]?\\d+)?))(?=[^a-zA-Z_])'
+        'name': 'constant.numeric.float.python'
+    }
+    {
+        'match': '(?<=[^0-9a-zA-Z_])(?i:(\\.\\d+(e[\\-\\+]?\\d+)?))'
+        'name': 'constant.numeric.float.python'
+    }
+    {
+        'match': '\\b(?i:(\\d+e[\\-\\+]?\\d+))'
+        'name': 'constant.numeric.float.python'
+    }
+    {
+        'match': '\\b(?i:([1-9]+[0-9]*|0)L)'
+        'name': 'constant.numeric.integer.long.decimal.python'
+    }
+    {
+        'match': '\\b([1-9]+[0-9]*|0)'
+        'name': 'constant.numeric.integer.decimal.python'
+    }
+    {
+        'match': '(angle_coeff)|(angle_style)|(atom_modify)|(atom_style)|(balance)|(bond_coeff)|(bond_style)|(boundary)|(side)|(change_box)|(clearcomm_modify)|(comm_style)|(compute)|(compute_modify)|(create_atoms)|(create_bonds)|(create_box)|(delete_atoms)|(delete_bonds)|(dielectric)|(dihedral_coeff)|(dihedral_style)|(dimension)|(displace_atoms)|(dump)|(dump_modify)|(echo)|(fix)|(fix_modify)|(group)|(if)|(improper_coeff)|(improper_style)|(include)|(jump)|(kspace_modify)|(kspace_style)|(label)|(lattice)|(log)|(mass)|(minimize)|(min_modify)|(min_style)|(molecule)|(neb)|(neigh_modify)|(neighbor)|(newton)|(next)|(package)|(pair_coeff)|(pair_modify)|(pair_style)|(pair_write)|(partition)|(prd)|(print)|(processors)|(python)|(quit)|(read_data)|(read_dump)|(read_restart)|(region)|(replicate)|(reset_timestep)|(restart)|(run)|(run_style)|(set)|(shell)|(special_bonds)|(suffix)|(tad)|(temper)|(thermo)|(thermo_modify)|(thermo_style)|(timestep)|(uncompute)|(undump)|(unfix)|(units)|(variable)|(velocity)|(write_data)|(write_dump)|(write_restart)|(nvt)|(wall\\.*)|(ave\\.*)'
+        'name': 'keyword.control.lammps'
+    }
+    {
+        'match': '(^|\s)((adapt)|(deform)|(freeze)|(momentum)|(npt)|(nve/line)|(oneway)|(qeq/comb)|(rigid)|(rigid/small/nve)|(store/force)|(tmd)|(addforce)|(deposit)|(gcmc)|(move)|(npt/asphere)|(nve/noforce)|(orient/fcc)|(qeq/dynamic)|(rigid/nph)|(rigid/small/nvt)|(store/state)|(ttm)|(append/atoms)|(drag)|(gld)|(msst)|(npt/sphere)|(nve/sphere)|(planeforce)|(qeq/point)|(rigid/npt)|(setforce)|(temp/berendsen)|(tune/kspace)|(atom/swap)|(balance)|(dt/reset)|(gravity)|(neb)|(nve)|(nve/tri)|(poems)|(qeq/shielded)|(rigid/nve)|(shake)|(temp/csld)|(vector)|(bond/break)|(efield)|(heat)|(nph)|(nve/asphere)|(pour)|(qeq/slater)|(rigid/nvt)|(spring)|(temp/csvr)|(viscosity)|(bond/create)|(enforce2d)|(indent)|(nphug)|(nve/asphere/noforce)|(nvt/asphere)|(press/berendsen)|(reax/bonds)|(rigid/small)|(spring/rg)|(temp/rescale)|(viscous)|(bond/swap)|(evaporate)|(langevin)|(nph/asphere)|(nve/body)|(nvt/sllod)|(print)|(recenter)|(rigid/small/nph)|(spring/self)|(tfmc)|(box/relax)|(external)|(lineforce)|(nph/sphere)|(nve/limit)|(nvt/sphere)|(property/atom)|(restrain)|(rigid/small/npt)|(srd)|(thermal/conductivity)|(angle/local)|(cluster/atom)|(damage/atom)|(erotate/sphere)|(heat/flux)|(msd)|(pe)|(property/chunk)|(snad/atom)|(temp/chunk)|(temp/sphere)|(angmom/chunk)|(cna/atom)|(dihedral/local)|(erotate/sphere/atom)|(improper/local)|(msd/chunk)|(pe/atom)|(rdf)|(snav/atom)|(temp/deform)|(ti)|(body/local)|(com)|(dilatation/atom)|(event/displace)|(inertia/chunk)|(msd/nongauss)|(plasticity/atom)|(reduce)|(stress/atom)|(temp/partial)|(torque/chunk)|(bond/local)|(com/chunk)|(displace/atom)|(group/group)|(ke)|(omega/chunk)|(pressure)|(reduce/region)|(temp)|(temp/profile)|(vacf)|(centro/atom)|(contact/atom)|(erotate/asphere)|(gyration)|(ke/atom)|(pair)|(property/atom)|(slice)|(temp/asphere)|(temp/ramp)|(vcm/chunk)|(chunk/atom)|(coord/atom)|(erotate/rigid)|(gyration/chunk)|(ke/rigid)|(pair/local)|(property/local)|(sna/atom)|(temp/com)|(temp/region)|(voronoi/atom)|(none)|(airebo)|(born)|(brownian)|(buck/coul/long)|(comb)|(coul/dsf)|(coul/wolf)|(eam/fs)|(eam/alloy)|(eam)|(gauss)|(gran/hooke/history)|(lcbop)|(lj/charmm/coul/long)|(lj/class2/coul/long)|(lj/cut/coul/dsf)|(lj/cut/dipole/long)|(lj/gromacs)|(lj/long/tip4p/long)|(lubricate)|(meam)|(nm/cut)|(peri/lps)|(rebo)|(sw)|(tersoff/zbl)|(yukawa)|(hybrid)|(beck)|(born/coul/long)|(brownian/poly)|(buck/coul/msm)|(comb3)|(coul/long)|(dpd)|(gayberne)|(hbond/dreiding/lj)|(line/lj)|(lj/charmm/coul/msm)|(lj/cut)|(lj/cut/coul/long)|(lj/cut/tip4p/cut)|(lj/gromacs/coul/gromacs)|(lj/smooth)|(lubricate/poly)|(mie/cut)|(nm/cut/coul/cut)|(peri/pmb)|(resquared)|(table)|(tip4p/cut)|(yukawa/colloid)|(hybrid/overlay)|(body)|(born/coul/msm)|(buck)|(buck/long/coul/long)|(coul/cut)|(coul/msm)|(dpd/tstat)|(gran/hertz/history)|(hbond/dreiding/morse)|(lj/charmm/coul/charmm)|(lj/class2)|(lj/cut/coul/cut)|(lj/cut/coul/msm)|(lj/cut/tip4p/long)|(lj/long/coul/long)|(lj/smooth/linear)|(lubricateU)|(morse)|(nm/cut/coul/long)|(peri/ves)|(snap)|(tersoff)|(tip4p/long)|(zbl)|(adp)|(bop)|(born/coul/wolf)|(buck/coul/cut)|(colloid)|(coul/debye)|(coul/streitz)|(dsmc)|(eim)|(gran/hooke)|(kim)|(lj/charmm/coul/charmm/implicit)|(lj/class2/coul/cut)|(lj/cut/coul/debye)|(lj/cut/dipole/cut)|(lj/expand)|(lj/long/dipole/long)|(lj96/cut)|(lubricateU/poly)|(nb3b/harmonic)|(peri/eps)|(reax)|(soft)|(tersoff/mod))'
+        'name': 'constant.character.lammps'
+    }
+    {
+        'match': 'equal'
+        'name': 'keyword.operator.assignment'
+    }
+    {
+        'begin': '\''
+        'end': '\''
+        'name': 'string.quoted.single.block.lammps'
+    }
+    {
+        'begin': '\"'
+        'end': '\"'
+        'name': 'string.quoted.double.block.lammps'
+    }
+    {
+        'begin': '#'
+        'end': '$'
+        'name': 'punctuation.definition.comment'
+    }
+    {
+        'begin': '\\$\\{'
+        'end': '\\}'
+        'name': 'variable.other'
+    }
+]
