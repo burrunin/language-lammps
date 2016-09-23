@@ -1,12 +1,9 @@
 {
   "name": "language-lammps",
-  "main": "./lib/language-lammps",
   "version": "0.3.0",
+  "main": "./lib/language-lammps",
   "description": "LAMMPS language support in Atom",
   "keywords": [],
-  "activationCommands": {
-    "atom-workspace": "language-lammps:toggle"
-  },
   "repository": "https://github.com/brunoduran/language-lammps",
   "license": "MIT",
   "engines": {
