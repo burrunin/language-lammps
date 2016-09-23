@@ -61,19 +61,21 @@
         'name': 'support.function.builtin.lammps'
     }
     {
-        'match': '(?<=\\becho)\\s+(none|screen|log|both)\\b'
+        'match': '(?<=echo)\\s+(none|screen|log|both)\\b'
         'name': 'constant.option.echo.lammps'
     }
     {
-        'match': '(?<=\\blog)\\s+(none)\\b'
+        'match': '(?<=log)\\s+none\\b'
         'name': 'constant.option.log.lammps'
     }
     {
-        'match': '(?<=\\blog\\s+\\S+)\\s+(append)\\b'
+        'comment': 'this is wrong should be \\s+\\S+'
+        'match': '(?<=log)\\sappend\\b'
         'name': 'constant.option.log.lammps'
     }
     {
-        'match': '(?<=\\bprint\\s+\\S+)\\s+(append|screen|file)\\b'
+        'comment': 'this is wrong should be \\s+\\S+'
+        'match': '(?<=print)\\s(append|screen|file)\\b'
         'name': 'constant.option.print.lammps'
     }
     
