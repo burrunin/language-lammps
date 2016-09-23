@@ -4,51 +4,55 @@
 'patterns': [
    {
         'match': '\\b(?i:(0x\\h*)L)'
-        'name': 'constant.numeric.integer.long.hexadecimal.python'
+        'name': 'constant.numeric.integer.long.hexadecimal.lammps'
    }
    {
         'match': '\\b(?i:(0x\\h*))'
-        'name': 'constant.numeric.integer.hexadecimal.python'
+        'name': 'constant.numeric.integer.hexadecimal.lammps'
    }
    {
         'match': '\\b(?i:(0o?[0-7]+)L)'
-        'name': 'constant.numeric.integer.long.octal.python'
+        'name': 'constant.numeric.integer.long.octal.lammps'
    }
    {
         'match': '\\b(?i:(0o?[0-7]+))'
-        'name': 'constant.numeric.integer.octal.python'
+        'name': 'constant.numeric.integer.octal.lammps'
    }
    {
         'match': '\\b(?i:(0b[01]+)L)',
-        'name': 'constant.numeric.integer.long.binary.python'
+        'name': 'constant.numeric.integer.long.binary.lammps'
    }
    {
         'match': '\\b(?i:(0b[01]+))',
-        'name': 'constant.numeric.integer.binary.python'
+        'name': 'constant.numeric.integer.binary.lammps'
    }
    {
         'match': '\\b(?i:(((\\d+(\\.(?=[^a-zA-Z_])\\d*)?|(?<=[^0-9a-zA-Z_])\\.\\d+)(e[\\-\\+]?\\d+)?))J)'
-        'name': 'constant.numeric.complex.python'
+        'name': 'constant.numeric.complex.lammps'
     }
     {
         'match': '\\b(?i:(\\d+\\.\\d*(e[\\-\\+]?\\d+)?))(?=[^a-zA-Z_])'
-        'name': 'constant.numeric.float.python'
+        'name': 'constant.numeric.float.lammps'
     }
     {
         'match': '(?<=[^0-9a-zA-Z_])(?i:(\\.\\d+(e[\\-\\+]?\\d+)?))'
-        'name': 'constant.numeric.float.python'
+        'name': 'constant.numeric.float.lammps'
     }
     {
         'match': '\\b(?i:(\\d+e[\\-\\+]?\\d+))'
-        'name': 'constant.numeric.float.python'
+        'name': 'constant.numeric.float.lammps'
     }
     {
         'match': '\\b(?i:([1-9]+[0-9]*|0)L)'
-        'name': 'constant.numeric.integer.long.decimal.python'
+        'name': 'constant.numeric.integer.long.decimal.lammps'
     }
     {
         'match': '\\b([1-9]+[0-9]*|0)'
-        'name': 'constant.numeric.integer.decimal.python'
+        'name': 'constant.numeric.integer.decimal.lammps'
+    }
+    {
+        'match': '\\bINF'
+        'name': 'constant.numeric.integer.decimal.lammps'
     }
     {
         'match': '(angle_coeff)|(angle_style)|(atom_modify)|(atom_style)|(balance)|(bond_coeff)|(bond_style)|(boundary)|(side)|(change_box)|(clearcomm_modify)|(comm_style)|(compute)|(compute_modify)|(create_atoms)|(create_bonds)|(create_box)|(delete_atoms)|(delete_bonds)|(dielectric)|(dihedral_coeff)|(dihedral_style)|(dimension)|(displace_atoms)|(dump)|(dump_modify)|(echo)|(fix)|(fix_modify)|(group)|(if)|(improper_coeff)|(improper_style)|(include)|(jump)|(kspace_modify)|(kspace_style)|(label)|(lattice)|(log)|(mass)|(minimize)|(min_modify)|(min_style)|(molecule)|(neb)|(neigh_modify)|(neighbor)|(newton)|(next)|(package)|(pair_coeff)|(pair_modify)|(pair_style)|(pair_write)|(partition)|(prd)|(print)|(processors)|(python)|(quit)|(read_data)|(read_dump)|(read_restart)|(region)|(replicate)|(reset_timestep)|(restart)|(run)|(run_style)|(set)|(shell)|(special_bonds)|(suffix)|(tad)|(temper)|(thermo)|(thermo_modify)|(thermo_style)|(timestep)|(uncompute)|(undump)|(unfix)|(units)|(variable)|(velocity)|(write_data)|(write_dump)|(write_restart)|(nvt)|(wall\\.*)|(ave\\.*)'
