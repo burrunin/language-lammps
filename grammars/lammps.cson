@@ -52,12 +52,12 @@
     }
     {
         'match': '\\bINF\\b'
-        'name': 'constant.numeric.integer.decimal.lammps'
+        'name': 'constant.numeric.lammps'
     }
 
     {
-        'comment': 'verbs that affect the simulation. What do we do with clear, log, shell, variable?. TODO'
-        'match': '(^\\s*|(?<=(\"|\'))\\s+)(angle_coeff|clear|angle_style|atom_modify|atom_style|balance|bond_coeff|bond_style|boundary|side|change_box|clearcomm_modify|comm_style|compute_modify|compute|create_atoms|create_bonds|create_box|delete_atoms|delete_bonds|dielectric|dihedral_coeff|dihedral_style|dimension|displace_atoms|dump_modify|dump|echo|fix_modify|fix|group|improper_coeff|improper_style|kspace_modify|kspace_style|label|lattice|log|mass|minimize|min_modify|min_style|molecule|neb|neigh_modify|neighbor|newton|next|package|pair_coeff|pair_modify|pair_style|pair_write|partition|prd|print|processors|python|quit|read_data|read_dump|read_restart|region|replicate|reset_timestep|restart|run|run_style|set|shell|special_bonds|suffix|tad|temper|thermo_modify|thermo_style|thermo|timestep|uncompute|undump|unfix|units|variable|velocity|write_data|write_dump|write_restart|nvt|wall\\.*|ave\\.*)\\b'
+        'comment': '(^\\s*|(?<=(\"|\'))\\s+)verbs that affect the simulation. What do we do with clear, log, shell, variable?. TODO'
+        'match': '(^|(?<=(\"|\')))\\s*(angle_coeff|clear|angle_style|atom_modify|atom_style|balance|bond_coeff|bond_style|boundary|side|change_box|clearcomm_modify|comm_style|compute_modify|compute|create_atoms|create_bonds|create_box|delete_atoms|delete_bonds|dielectric|dihedral_coeff|dihedral_style|dimension|displace_atoms|dump_modify|dump|echo|fix_modify|fix|group|improper_coeff|improper_style|kspace_modify|kspace_style|label|lattice|log|mass|minimize|min_modify|min_style|molecule|neb|neigh_modify|neighbor|newton|next|package|pair_coeff|pair_modify|pair_style|pair_write|partition|prd|print|processors|python|quit|read_data|read_dump|read_restart|region|replicate|reset_timestep|restart|run|run_style|set|shell|special_bonds|suffix|tad|temper|thermo_modify|thermo_style|thermo|timestep|uncompute|undump|unfix|units|variable|velocity|write_data|write_dump|write_restart|nvt|wall\\.*|ave\\.*)\\b'
         'name': 'support.function.builtin.lammps'
     }
 
@@ -97,13 +97,14 @@
         'name': 'keyword.operator.assignment'
     }
     {
-        'begin': '\''
-        'end': '\''
-        'name': 'string.quoted.single.block.lammps'
+        'comment': 'this is a poor example of how to do things, but its the best i got atm'
+        'match': '(\'|\"){1,3}'
+        'name': 'keyword.operator.assignment'
     }
     {
-        'begin': '\"'
-        'end': '\"'
+        'comment: example string'
+        'begin': 'NOPE\"'
+        'end': 'NOPE\"'
         'name': 'string.quoted.double.block.lammps'
     }
     {
