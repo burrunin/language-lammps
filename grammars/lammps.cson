@@ -2,34 +2,26 @@
 'name': 'LAMMPS'
 'fileTypes': ['lmp', 'lmps', 'lammps']
 'patterns': [
-   {
-        'match': '\\b(?i:(0x\\h*)L)\\b'
-        'name': 'constant.numeric.integer.long.hexadecimal.lammps'
-   }
-   {
-        'match': '\\b(?i:(0x\\h*))\\b'
-        'name': 'constant.numeric.integer.hexadecimal.lammps'
-   }
-   {
-        'match': '\\b(?i:(0o?[0-7]+)L)\\b'
-        'name': 'constant.numeric.integer.long.octal.lammps'
-   }
-   {
-        'match': '\\b(?i:(0o?[0-7]+))\\b'
-        'name': 'constant.numeric.integer.octal.lammps'
-   }
-   {
-        'match': '\\b(?i:(0b[01]+)L)\\b',
-        'name': 'constant.numeric.integer.long.binary.lammps'
-   }
-   {
-        'match': '\\b(?i:(0b[01]+))\\b',
-        'name': 'constant.numeric.integer.binary.lammps'
-   }
-   {
-        'match': '\\b(?i:(((\\d+(\\.(?=[^a-zA-Z_])\\d*)?|(?<=[^0-9a-zA-Z_])\\.\\d+)(e[\\-\\+]?\\d+)?))J)\\b'
-        'name': 'constant.numeric.complex.lammps'
+    {
+        'comment': 'Commands that change the simulation behaviour or input/output. FIXME: What do we do with clear, log, shell, variable? What is doing vt here?'
+        'match': '(^|(?<=(\"|\')))\\s*(angle_coeff|clear|angle_style|atom_modify|atom_style|balance|bond_coeff|bond_style|boundary|side|change_box|clearcomm_modify|comm_style|compute_modify|compute|create_atoms|create_bonds|create_box|delete_atoms|delete_bonds|dielectric|dihedral_coeff|dihedral_style|dimension|displace_atoms|dump_modify|dump|echo|fix_modify|fix|group|improper_coeff|improper_style|kspace_modify|kspace_style|label|lattice|log|mass|minimize|min_modify|min_style|molecule|neb|neigh_modify|neighbor|newton|next|package|pair_coeff|pair_modify|pair_style|pair_write|partition|prd|print|processors|python|quit|read_data|read_dump|read_restart|region|replicate|reset_timestep|restart|run|run_style|set|shell|special_bonds|suffix|tad|temper|thermo_modify|thermo_style|thermo|timestep|uncompute|undump|unfix|units|variable|velocity|write_data|write_dump|write_restart|nvt|wall\\.*|ave\\.*)\\b'
+        'name': 'support.function.builtin.lammps'
     }
+    {
+        'comment': 'Commands that change the code flow'
+        'name': 'keyword.control.conditional.lammps'
+        'match': '(^|(?<=(\"|\')))\\s*(include|jump|label|next)'
+    }
+    {
+        'comment': 'Commands that change the code flow, conditionals'
+        'name': 'keyword.control.conditional.lammps'
+        'match': '\\b(if|elif|else|then|&)\\b'
+    }
+
+
+
+
+
     {
         'match': '\\b(?i:(\\d+\\.\\d*(e[\\-\\+]?\\d+)?))(?=[^a-zA-Z_])\\b'
         'name': 'constant.numeric.float.lammps'
@@ -51,8 +43,48 @@
         'name': 'constant.numeric.integer.decimal.lammps'
     }
     {
-        'match': '\\bINF\\b'
+        'comment': 'LAMMPS constants. All of them are numeric, as booleans are just numbers in LAMMPS. But they are not recognized as such all the time e.g thermo off. FIXME: Is INF a constant in LAMMPS?'
+        'match': '(?<= )(INF|PI|version|on|off|true|false|yes|no)(\\s|$)'
         'name': 'constant.numeric.lammps'
+    }
+    {
+        'match': 'equal'
+        'name': 'keyword.operator.assignment'
+    }
+    {
+        'comment': 'Math operators. NOTE: I do notlike how brackets feels. FIXME: Only between $(...), research how to do it,  / not implemented yet. Square brackets are for index and not suppose to be here'
+        'match': '\\(|\\)|\\[|\\]|-|\\+|\\*|\\|(\\||^)|\\^|\\%|(=|!)=|(<|>)=?|&&|!|NOPE/'
+        'name': 'keyword.operator'
+    }
+    {
+        'comment': 'Math functions. FIXME: add color'
+        'match': 'sqrt|exp|ln|log|abs|sin|cos|tan|asin|acos|atan|atan2|random|normal|ceil|floor|round|ramp|stagger|logfreq|logfreq2|stride|stride2|vdisplace|swiggle|cwiggle'
+        'name': 'function.math.lammps'
+    }
+    {
+        'comment': 'Group/region functions. FIXME: add color, fix ke'
+        'match': 'count|mass|charge|xcm|vcm|fcm|bound|gyration|NOPEke|angmom|torque|inertia|omega'
+        'name': 'function.group.region.lammps'
+    }
+    {
+        'comment': 'Special functions functions. FIXME: add color'
+        'match': 'sum|min|max|ave|trap|slope|gmask|rmask|grmask|next'
+        'name': 'function.special.lammps'
+    }
+    {
+        'comment': 'Special functions functions. FIXME: add color'
+        'match': 'sum|min|max|ave|trap|slope|gmask|rmask|grmask|next'
+        'name': 'function.special.lammps'
+    }
+    {
+        'comment': 'Atom values/vectors I do not know how to implement this yet'
+        'match': 'NOPE(id|mass|type|mol|x|y|z|vx|vy|vz|fx|fy|fz|q)'
+        'name': 'function.special.lammps'
+    }
+    {
+        'comment': 'Thermo keywords. FIXME: Words that are not here like none all etc etc'
+        'match': '(?<= )(step|elapsed|elaplong|dt|time|cpu|tpcpu|spcpu|cpuremain|part|timeremain|atoms|temp|press|pe|ke|etotal|enthalpy|evdwl|ecoul|epair|ebond|eangle|edihed|eimp|emol|elong|etail|vol|density|lx|ly|lz|xlo|xhi|ylo|yhi|zlo|zhi|xy|xz|yz|xlat|ylat|zlat|bonds|angles|dihedrals|impropers|pxx|pyy|pzz|pxy|pxz|pyz|fmax|fnorm|nbuild|ndanger|cella|cellb|cellc|cellalpha|cellbeta|cellgamma|SELF)(\\s|$)'
+        'name': 'constant.thermo.lammps'
     }
 
 
@@ -60,26 +92,50 @@
 
 
     {
+        'comment': 'Comments'
         'begin': '#'
         'end': '$'
         'name': 'punctuation.definition.comment'
     }
     {
-        'comment': 'NOTE: this is a poor example of how to do things, but its the best i got atm'
+        'comment': 'FIXME: this is a poor example of how to do things, but its the best i got atm. Sometimes indicates strings.'
         'match': '(\'|\"){1,3}'
         'name': 'keyword.operator.assignment'
     }
     {
+        'comment': 'Variables expressed as ${ID}'
         'begin': '\\$\\{'
         'end': '\\}'
         'name': 'variable.other.key'
     }
     {
+        'comment': 'Variables expressed as $x'
         'match': '\\$\\w'
         'name': 'variable.other.single'
     }
     {
-        'comment: example string'
+        'comment': 'Variables referenced with underscores. RegExp should improve (see below)'
+        'match': '[cfvCFV]_\\w+'
+        'name': 'variable.other.reference'
+    }
+    {
+        'comment': 'Definition of variables with variable command'
+        'name': 'variable.other.definition.lammps'
+        'match': '(?<=variable)\\s*\\w+'
+    }
+    {
+        'comment': 'Definition of variables with compute command. NOTE: Could we use only one RegExp with variable'
+        'name': 'variable.other.definition.lammps'
+        'match': '(?<=compute)\\s*\\w+'
+    }
+    {
+        'comment': 'Example of next RegExp of the variables'
+        'begin': 'NOPE(?<=(\'|\")|\\s)\\$\\{'
+        'end': '\\}'
+        'name': 'variable.other.key'
+    }
+    {
+        'comment': 'Example string, not used. Remove.'
         'begin': 'NOPE\"'
         'end': 'NOPE\"'
         'name': 'string.quoted.double.block.lammps'
@@ -88,29 +144,16 @@
 
 
 
-    {
-        'comment': 'Commands that affect the simulation. What do we do with clear, log, shell, variable?. TODO'
-        'match': '(^|(?<=(\"|\')))\\s*(angle_coeff|clear|angle_style|atom_modify|atom_style|balance|bond_coeff|bond_style|boundary|side|change_box|clearcomm_modify|comm_style|compute_modify|compute|create_atoms|create_bonds|create_box|delete_atoms|delete_bonds|dielectric|dihedral_coeff|dihedral_style|dimension|displace_atoms|dump_modify|dump|echo|fix_modify|fix|group|improper_coeff|improper_style|kspace_modify|kspace_style|label|lattice|log|mass|minimize|min_modify|min_style|molecule|neb|neigh_modify|neighbor|newton|next|package|pair_coeff|pair_modify|pair_style|pair_write|partition|prd|print|processors|python|quit|read_data|read_dump|read_restart|region|replicate|reset_timestep|restart|run|run_style|set|shell|special_bonds|suffix|tad|temper|thermo_modify|thermo_style|thermo|timestep|uncompute|undump|unfix|units|variable|velocity|write_data|write_dump|write_restart|nvt|wall\\.*|ave\\.*)\\b'
-        'name': 'support.function.builtin.lammps'
-    }
-    {
-        'comment': 'Commands that change the code flow'
-        'name': 'keyword.control.conditional.lammps'
-        'match': '(^|(?<=(\"|\')))\\s*(include|jump|label|next)'
-    }
-    {
-        'comment': 'Commands that change the code flow.2'
-        'name': 'keyword.control.conditional.lammps'
-        'match': '\\b(if|elif|else|then|&)\\b'
-    }
+
+
 
 
 
 
 
     {
-        'comment': 'options to . This is going to get a lot of false-positives, but is faster than the alternatives'
-        'match': '\\s(none|screen|log|both|append|screen|file)\\b'
+        'comment': 'FIXME: options LAMMPS'
+        'match': 'NOPE\\s(none|screen|log|both|append|screen|file)\\b'
         'name': 'constant.option.all.lammps'
     }
     {
@@ -121,48 +164,73 @@
 
 
     {
-        'comment': 're looks expensive'
-        'match': '(?<=jump)\\s+SELF\\b'
-        'name': 'constant.option.jump.lammps'
-    }
-    {
-        'match': '\\s(all|adapt|deform|freeze|momentum|npt|nve/line|oneway|qeq/comb|rigid|rigid/small/nve|store/force|tmd|addforce|deposit|gcmc|move|npt/asphere|nve/noforce|orient/fcc|qeq/dynamic|rigid/nph|rigid/small/nvt|store/state|ttm|append/atoms|drag|gld|msst|npt/sphere|nve/sphere|planeforce|qeq/point|rigid/npt|setforce|temp/berendsen|tune/kspace|atom/swap|balance|dt/reset|gravity|neb|nve|nve/tri|poems|qeq/shielded|rigid/nve|shake|temp/csld|vector|bond/break|efield|heat|nph|nve/asphere|pour|qeq/slater|rigid/nvt|spring|temp/csvr|viscosity|bond/create|enforce2d|indent|nphug|nve/asphere/noforce|nvt/asphere|press/berendsen|reax/bonds|rigid/small|spring/rg|temp/rescale|viscous|bond/swap|evaporate|langevin|nph/asphere|nve/body|nvt/sllod|print|recenter|rigid/small/nph|spring/self|tfmc|box/relax|external|lineforce|nph/sphere|nve/limit|nvt/sphere|property/atom|restrain|rigid/small/npt|srd|thermal/conductivity|angle/local|cluster/atom|damage/atom|erotate/sphere|heat/flux|msd|pe/atom|pe|property/chunk|snad/atom|temp/chunk|temp/sphere|angmom/chunk|cna/atom|dihedral/local|erotate/sphere/atom|improper/local|msd/chunk|rdf|snav/atom|temp/deform|ti|body/local|com|dilatation/atom|event/displace|inertia/chunk|msd/nongauss|plasticity/atom|reduce|stress/atom|temp/partial|torque/chunk|bond/local|com/chunk|displace/atom|group/group|omega/chunk|pressure|reduce/region|temp|temp/profile|vacf|centro/atom|contact/atom|erotate/asphere|gyration|ke/atom|pair|property/atom|slice|temp/asphere|temp/ramp|vcm/chunk|chunk/atom|coord/atom|erotate/rigid|gyration/chunk|ke/rigid|pair/local|property/local|sna/atom|temp/com|temp/region|voronoi/atom|none|airebo|born|brownian|buck/coul/long|comb|coul/dsf|coul/wolf|eam/fs|eam/alloy|eam|gauss|gran/hooke/history|lcbop|lj/charmm/coul/long|lj/class2/coul/long|lj/cut/coul/dsf|lj/cut/dipole/long|lj/gromacs|lj/long/tip4p/long|lubricate|meam|nm/cut|peri/lps|rebo|sw|tersoff/zbl|yukawa|hybrid|beck|born/coul/long|brownian/poly|buck/coul/msm|comb3|coul/long|dpd|gayberne|hbond/dreiding/lj|line/lj|lj/charmm/coul/msm|lj/cut|lj/cut/coul/long|lj/cut/tip4p/cut|lj/gromacs/coul/gromacs|lj/smooth|lubricate/poly|mie/cut|nm/cut/coul/cut|peri/pmb|resquared|table|tip4p/cut|yukawa/colloid|hybrid/overlay|body|born/coul/msm|buck|buck/long/coul/long|coul/cut|coul/msm|dpd/tstat|gran/hertz/history|hbond/dreiding/morse|lj/charmm/coul/charmm|lj/class2|lj/cut/coul/cut|lj/cut/coul/msm|lj/cut/tip4p/long|lj/long/coul/long|lj/smooth/linear|lubricateU|morse|nm/cut/coul/long|peri/ves|snap|tersoff|tip4p/long|zbl|adp|bop|born/coul/wolf|buck/coul/cut|colloid|coul/debye|coul/streitz|dsmc|eim|gran/hooke|kim|lj/charmm/coul/charmm/implicit|lj/class2/coul/cut|lj/cut/coul/debye|lj/cut/dipole/cut|lj/expand|lj/long/dipole/long|lj96/cut|lubricateU/poly|nb3b/harmonic|peri/eps|reax|soft|tersoff/mod|ke)(\\s|$)'
+        'comment': 'FIXME: Check this out'
+        'match': 'NOPE\\s(all|adapt|deform|freeze|momentum|npt|nve/line|oneway|qeq/comb|rigid|rigid/small/nve|store/force|tmd|addforce|deposit|gcmc|move|npt/asphere|nve/noforce|orient/fcc|qeq/dynamic|rigid/nph|rigid/small/nvt|store/state|ttm|append/atoms|drag|gld|msst|npt/sphere|nve/sphere|planeforce|qeq/point|rigid/npt|setforce|temp/berendsen|tune/kspace|atom/swap|balance|dt/reset|gravity|neb|nve|nve/tri|poems|qeq/shielded|rigid/nve|shake|temp/csld|vector|bond/break|efield|heat|nph|nve/asphere|pour|qeq/slater|rigid/nvt|spring|temp/csvr|viscosity|bond/create|enforce2d|indent|nphug|nve/asphere/noforce|nvt/asphere|press/berendsen|reax/bonds|rigid/small|spring/rg|temp/rescale|viscous|bond/swap|evaporate|langevin|nph/asphere|nve/body|nvt/sllod|print|recenter|rigid/small/nph|spring/self|tfmc|box/relax|external|lineforce|nph/sphere|nve/limit|nvt/sphere|property/atom|restrain|rigid/small/npt|srd|thermal/conductivity|angle/local|cluster/atom|damage/atom|erotate/sphere|heat/flux|msd|pe/atom|pe|property/chunk|snad/atom|temp/chunk|temp/sphere|angmom/chunk|cna/atom|dihedral/local|erotate/sphere/atom|improper/local|msd/chunk|rdf|snav/atom|temp/deform|ti|body/local|com|dilatation/atom|event/displace|inertia/chunk|msd/nongauss|plasticity/atom|reduce|stress/atom|temp/partial|torque/chunk|bond/local|com/chunk|displace/atom|group/group|omega/chunk|pressure|reduce/region|temp|temp/profile|vacf|centro/atom|contact/atom|erotate/asphere|gyration|ke/atom|pair|property/atom|slice|temp/asphere|temp/ramp|vcm/chunk|chunk/atom|coord/atom|erotate/rigid|gyration/chunk|ke/rigid|pair/local|property/local|sna/atom|temp/com|temp/region|voronoi/atom|none|airebo|born|brownian|buck/coul/long|comb|coul/dsf|coul/wolf|eam/fs|eam/alloy|eam|gauss|gran/hooke/history|lcbop|lj/charmm/coul/long|lj/class2/coul/long|lj/cut/coul/dsf|lj/cut/dipole/long|lj/gromacs|lj/long/tip4p/long|lubricate|meam|nm/cut|peri/lps|rebo|sw|tersoff/zbl|yukawa|hybrid|beck|born/coul/long|brownian/poly|buck/coul/msm|comb3|coul/long|dpd|gayberne|hbond/dreiding/lj|line/lj|lj/charmm/coul/msm|lj/cut|lj/cut/coul/long|lj/cut/tip4p/cut|lj/gromacs/coul/gromacs|lj/smooth|lubricate/poly|mie/cut|nm/cut/coul/cut|peri/pmb|resquared|table|tip4p/cut|yukawa/colloid|hybrid/overlay|body|born/coul/msm|buck|buck/long/coul/long|coul/cut|coul/msm|dpd/tstat|gran/hertz/history|hbond/dreiding/morse|lj/charmm/coul/charmm|lj/class2|lj/cut/coul/cut|lj/cut/coul/msm|lj/cut/tip4p/long|lj/long/coul/long|lj/smooth/linear|lubricateU|morse|nm/cut/coul/long|peri/ves|snap|tersoff|tip4p/long|zbl|adp|bop|born/coul/wolf|buck/coul/cut|colloid|coul/debye|coul/streitz|dsmc|eim|gran/hooke|kim|lj/charmm/coul/charmm/implicit|lj/class2/coul/cut|lj/cut/coul/debye|lj/cut/dipole/cut|lj/expand|lj/long/dipole/long|lj96/cut|lubricateU/poly|nb3b/harmonic|peri/eps|reax|soft|tersoff/mod|ke)(\\s|$)'
         'name': 'constant.character.lammps'
     }
 
-    {
-        'match': 'equal'
-        'name': 'keyword.operator.assignment'
-    }
-
-
 
 
 
 
     {
-        'comment': 'FIXME: error class'
-        'match': '^ERROR: .+'
-        'name': 'string.quoted.block'
-    }
-    {
-        'comment': 'FIXME: warning class'
-        'match': '^WARNING: .+'
-        'name': 'string.quoted'
-    }
-    {
-        'comment': 'FIXME: info class. Pick all created'
-        'match': '^Created \\d+ atoms$'
+        'comment': 'LAMMPS first output (the version). Is LAMMPS going to be around in the CI century? NOTE: All this section is probably temporary'
+        'match': '^LAMMPS \\(\\d{1,2} \\w{1,4} \\d{4}\\)'
         'name': 'punctuation.definition.comment'
     }
     {
-        'comment': 'FIXME: info class'
-        'match': '^Deleted \\d+ atoms, new total = \\d+$'
+        'comment': 'Error and warning output'
+        'match': '^(ERROR|WARNING): .+'
+        'name': 'variable.other.error'
+    }
+    {
+        'comment': 'Created and delated information'
+        'match': '^(Created|Deleted) .+'
         'name': 'punctuation.definition.comment'
     }
     {
-        'comment': 'FIXME: info class'
+        'comment': 'Titles + another fixed prints'
+        'match': '^(Neighbor list info ...|MPI task timing breakdown:|Minimization stats:|PotEng KinEng |---------------------------------------------------------------)$'
+        'name': 'punctuation.definition.comment'
+    }
+    {
+        'comment': 'LAMMPS section highlighting after titles seems to be two spaces before the normal printing. FIXME: this is a cheap fix'
+        'match': '^\\s{2}\\S.*'
+        'name': 'punctuation.definition.comment'
+    }
+    {
+        'comment': 'Another misc information'
+        'match': '^(Total # of neighbors|Ave neighs/atom|Neighbor list builds|Dangerous builds|Memory usage per processor) = .+'
+        'name': 'punctuation.definition.comment'
+    }
+    {
+        'comment': 'Tables'
+        'match': '^(Section |Pair    |Neigh   |Comm    |Output  |Modify  |Other   )\\|.+'
+        'name': 'punctuation.definition.comment'
+    }
+    {
+        'comment': 'Histograms'
+        'match': '^(Nlocal:    |Histogram: |Nghost:    |Histogram: |Neighs:    |Histogram: ).+'
+        'name': 'punctuation.definition.comment'
+    }
+    {
+        'comment': 'Lattice info'
         'match': '^Lattice spacing in .+'
+        'name': 'punctuation.definition.comment'
+    }
+    {
+        'comment': 'CPU use info. FIXME: RegExp is taking the numbers first'
+        'match': '% CPU use with 1 MPI tasks x no OpenMP threads$'
+        'name': 'punctuation.definition.comment'
+    }
+    {
+        'comment': 'Loop time info'
+        'match': '^Loop time of .+ on \\d+ procs for \\d+ steps with \\d+ atoms$'
+        'name': 'punctuation.definition.comment'
+    }
+    {
+        'comment': 'FIXME: Test'
+        'match': '^\0.*'
         'name': 'punctuation.definition.comment'
     }
 ]
