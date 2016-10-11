@@ -96,6 +96,13 @@
         'begin': '#'
         'end': '$'
         'name': 'punctuation.definition.comment'
+        'patterns': [
+            {
+                'comment': 'Notes: FIXMEs, TODOs, NOTEs etc, etc ... FIXME: Look how to check init comment + change color'
+                'match': '\\s(NOTE|OPTIMIZE|TODO|HACK|XXX|FIXME|BUG)+(?=:)'
+                'name': 'variable.other.single'
+            }
+        ]
     }
     {
         'comment': 'FIXME: this is a poor example of how to do things, but its the best i got atm. Sometimes indicates strings.'
