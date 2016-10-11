@@ -98,9 +98,20 @@
         'name': 'punctuation.definition.comment'
         'patterns': [
             {
-                'comment': 'Notes: FIXMEs, TODOs, NOTEs etc, etc ... FIXME: Look how to check init comment + change color'
-                'match': '\\s(NOTE|OPTIMIZE|TODO|HACK|XXX|FIXME|BUG)+(?=:)'
+                'comment': 'Notes: FIXMEs, TODOs, NOTEs etc, etc ... FIXME: Look how to check init comment + change color ^\\s*(NOTE|OPTIMIZE|TODO|HACK|XXX|FIXME|BUG)\\s.*?:'
+                'match': '\\s(NOTE|OPTIMIZE|TODO|HACK|XXX|FIXME|BUG)(\\s.*?)?:'
                 'name': 'variable.other.single'
+            }
+        ]
+    }
+    {
+        'comment': 'Formula/math mode FIXME: End up this'
+        'begin': '\\$\\('
+        'end': '\\)'
+        'name': 'math.mode'
+        'patterns': [
+            {
+                'include': '#variables'
             }
         ]
     }
@@ -111,8 +122,7 @@
     }
     {
         'comment': 'Variables expressed as ${ID}'
-        'begin': '\\$\\{'
-        'end': '\\}'
+        'match': '\\$\\{\\w+\\}'
         'name': 'variable.other.key'
     }
     {
@@ -241,3 +251,21 @@
         'name': 'punctuation.definition.comment'
     }
 ]
+
+'repository':
+    'variables':
+        'comment': 'Reference to variables'
+        'patterns': [
+            {
+                'match': '[cfvCFV]_\\w+'
+                'name': 'variable.other.reference'
+            }
+            {
+                'match': '\\$\\{\\w+\\}'
+                'name': 'variable.other.key'
+            }
+            {
+                'match': '\\$\\w'
+                'name': 'variable.other.single'
+            }
+        ]
