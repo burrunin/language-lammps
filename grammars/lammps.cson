@@ -28,6 +28,12 @@
         'match': 'equal'
         'name': 'keyword.operator.assignment'
     }
+    {
+        'comment': 'Path NOTE: Experimental also It should allow spaces \\s and have proper color'
+        'match': '(?<= )(~|/|\\.)[a-zA-Z0-9_\\-\\./]*'
+        'name': 'constant.numeric'
+    }
+
 
     {
         'comment': 'Math functions. FIXME: add color'
@@ -108,14 +114,6 @@
         'end': 'NOPE\"'
         'name': 'string.quoted.double.block.lammps'
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -230,7 +228,7 @@
             }
         ]
     'constants_numeric':
-        'comment': 'Numeric constants'
+        'comment': 'Numeric constants FIXME: Me he cargado los elementos de la forma 1.3, 1.4 etc..'
         'patterns': [
                 {
                     'match': '(?<=[^0-9a-zA-Z_])(?i:(\\.\\d+(e[\\-\\+]?\\d+)?))\\b'
