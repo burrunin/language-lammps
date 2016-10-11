@@ -61,7 +61,7 @@
         'name': 'function.special.lammps'
     }
     {
-        'comment': 'Thermo keywords. FIXME: Words that are not here like none all etc etc'
+        'comment': 'Thermo keywords. FIXME: Words that are not here like none all etc etc. Add local/vector/atom stuff'
         'match': '(?<= )(step|elapsed|elaplong|dt|time|cpu|tpcpu|spcpu|cpuremain|part|timeremain|atoms|temp|press|pe|ke|etotal|enthalpy|evdwl|ecoul|epair|ebond|eangle|edihed|eimp|emol|elong|etail|vol|density|lx|ly|lz|xlo|xhi|ylo|yhi|zlo|zhi|xy|xz|yz|xlat|ylat|zlat|bonds|angles|dihedrals|impropers|pxx|pyy|pzz|pxy|pxz|pyz|fmax|fnorm|nbuild|ndanger|cella|cellb|cellc|cellalpha|cellbeta|cellgamma|SELF)(\\s|$)'
         'name': 'constant.thermo.lammps'
     }
@@ -82,7 +82,7 @@
         ]
     }
     {
-        'comment': 'Formula/math mode FIXME: End up this'
+        'comment': 'Formula/math mode FIXME: End up this. Add functions + equal style'
         'begin': '\\$\\('
         'end': '\\)'
         'name': 'math.mode'
@@ -222,20 +222,28 @@
                 'match': '(?<=variable)\\s*\\w+'
             }
             {
-                'comment': 'Definition of variables with compute command. NOTE: Could we use only one RegExp with variable'
+                'comment': 'Definition of variables with compute command. NOTE: Could we use only one RegExp with variable/fix'
                 'name': 'variable.other.definition.lammps'
                 'match': '(?<=compute)\\s*\\w+'
             }
+            {
+                'name': 'variable.other.definition.lammps'
+                'match': '(?<=fix)\\s*\\w+'
+            }
         ]
     'constants_numeric':
-        'comment': 'Numeric constants FIXME: Me he cargado los elementos de la forma 1.3, 1.4 etc..'
+        'comment': 'Numeric constants FIXME: Me he cargado los elementos de la forma 1.3, 1.4 etc.. FIXME: REVISE THIS'
         'patterns': [
                 {
-                    'match': '(?<=[^0-9a-zA-Z_])(?i:(\\.\\d+(e[\\-\\+]?\\d+)?))\\b'
+                    'match': '\\b[+-]?([0-9]*[.])?[0-9]+\\b'
                     'name': 'constant.numeric.float.lammps'
                 }
                 {
                     'match': '\\b(?i:(\\d+e[\\-\\+]?\\d+))\\b'
+                    'name': 'constant.numeric.float.lammps'
+                }
+                {
+                    'match': '(?<=[^0-9a-zA-Z_])(?i:(\\.\\d+(e[\\-\\+]?\\d+)?))\\b'
                     'name': 'constant.numeric.float.lammps'
                 }
                 {
