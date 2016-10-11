@@ -21,41 +21,14 @@
 
 
 
-
     {
-        'match': '\\b(?i:(\\d+\\.\\d*(e[\\-\\+]?\\d+)?))(?=[^a-zA-Z_])\\b'
-        'name': 'constant.numeric.float.lammps'
-    }
-    {
-        'match': '(?<=[^0-9a-zA-Z_])(?i:(\\.\\d+(e[\\-\\+]?\\d+)?))\\b'
-        'name': 'constant.numeric.float.lammps'
-    }
-    {
-        'match': '\\b(?i:(\\d+e[\\-\\+]?\\d+))\\b'
-        'name': 'constant.numeric.float.lammps'
-    }
-    {
-        'match': '\\b(?i:([1-9]+[0-9]*|0)L)\\b'
-        'name': 'constant.numeric.integer.long.decimal.lammps'
-    }
-    {
-        'match': '\\b([1-9]+[0-9]*|0)\\b'
-        'name': 'constant.numeric.integer.decimal.lammps'
-    }
-    {
-        'comment': 'LAMMPS constants. All of them are numeric, as booleans are just numbers in LAMMPS. But they are not recognized as such all the time e.g thermo off. FIXME: Is INF a constant in LAMMPS?'
-        'match': '(?<= )(INF|PI|version|on|off|true|false|yes|no)(\\s|$)'
-        'name': 'constant.numeric.lammps'
+        'include': '#constants_numeric'
     }
     {
         'match': 'equal'
         'name': 'keyword.operator.assignment'
     }
-    {
-        'comment': 'Math operators. NOTE: I do notlike how brackets feels. FIXME: Only between $(...), research how to do it,  / not implemented yet. Square brackets are for index and not suppose to be here'
-        'match': '\\(|\\)|\\[|\\]|-|\\+|\\*|\\|(\\||^)|\\^|\\%|(=|!)=|(<|>)=?|&&|!|NOPE/'
-        'name': 'keyword.operator'
-    }
+
     {
         'comment': 'Math functions. FIXME: add color'
         'match': 'sqrt|exp|ln|log|abs|sin|cos|tan|asin|acos|atan|atan2|random|normal|ceil|floor|round|ramp|stagger|logfreq|logfreq2|stride|stride2|vdisplace|swiggle|cwiggle'
@@ -98,9 +71,7 @@
         'name': 'punctuation.definition.comment'
         'patterns': [
             {
-                'comment': 'Notes: FIXMEs, TODOs, NOTEs etc, etc ... FIXME: Look how to check init comment + change color ^\\s*(NOTE|OPTIMIZE|TODO|HACK|XXX|FIXME|BUG)\\s.*?:'
-                'match': '\\s(NOTE|OPTIMIZE|TODO|HACK|XXX|FIXME|BUG)(\\s.*?)?:'
-                'name': 'variable.other.single'
+                'include': '#annotations'
             }
         ]
     }
@@ -113,6 +84,12 @@
             {
                 'include': '#variables'
             }
+            {
+                'include': '#constants_numeric'
+            }
+            {
+                'include': '#operators_symbols'
+            }
         ]
     }
     {
@@ -121,36 +98,10 @@
         'name': 'keyword.operator.assignment'
     }
     {
-        'comment': 'Variables expressed as ${ID}'
-        'match': '\\$\\{\\w+\\}'
-        'name': 'variable.other.key'
+        'include': '#variables'
     }
-    {
-        'comment': 'Variables expressed as $x'
-        'match': '\\$\\w'
-        'name': 'variable.other.single'
-    }
-    {
-        'comment': 'Variables referenced with underscores. RegExp should improve (see below)'
-        'match': '[cfvCFV]_\\w+'
-        'name': 'variable.other.reference'
-    }
-    {
-        'comment': 'Definition of variables with variable command'
-        'name': 'variable.other.definition.lammps'
-        'match': '(?<=variable)\\s*\\w+'
-    }
-    {
-        'comment': 'Definition of variables with compute command. NOTE: Could we use only one RegExp with variable'
-        'name': 'variable.other.definition.lammps'
-        'match': '(?<=compute)\\s*\\w+'
-    }
-    {
-        'comment': 'Example of next RegExp of the variables'
-        'begin': 'NOPE(?<=(\'|\")|\\s)\\$\\{'
-        'end': '\\}'
-        'name': 'variable.other.key'
-    }
+
+
     {
         'comment': 'Example string, not used. Remove.'
         'begin': 'NOPE\"'
@@ -268,4 +219,55 @@
                 'match': '\\$\\w'
                 'name': 'variable.other.single'
             }
+            {
+                'name': 'variable.other.definition.lammps'
+                'match': '(?<=variable)\\s*\\w+'
+            }
+            {
+                'comment': 'Definition of variables with compute command. NOTE: Could we use only one RegExp with variable'
+                'name': 'variable.other.definition.lammps'
+                'match': '(?<=compute)\\s*\\w+'
+            }
         ]
+    'constants_numeric':
+        'comment': 'Numeric constants'
+        'patterns': [
+                {
+                    'match': '(?<=[^0-9a-zA-Z_])(?i:(\\.\\d+(e[\\-\\+]?\\d+)?))\\b'
+                    'name': 'constant.numeric.float.lammps'
+                }
+                {
+                    'match': '\\b(?i:(\\d+e[\\-\\+]?\\d+))\\b'
+                    'name': 'constant.numeric.float.lammps'
+                }
+                {
+                    'match': '\\b(?i:([1-9]+[0-9]*|0)L)\\b'
+                    'name': 'constant.numeric.integer.long.decimal.lammps'
+                }
+                {
+                    'match': '\\b([1-9]+[0-9]*|0)\\b'
+                    'name': 'constant.numeric.integer.decimal.lammps'
+                }
+                {
+                    'comment': 'LAMMPS constants. All of them are numeric, as booleans are just numbers in LAMMPS. But they are not recognized as such all the time e.g thermo off. FIXME: Is INF a constant in LAMMPS?'
+                    'match': '(?<= )(INF|PI|version|on|off|true|false|yes|no)(\\s|$)'
+                    'name': 'constant.numeric.lammps'
+                }
+                {
+                    'match': '\\b(?i:(\\d+\\.\\d*(e[\\-\\+]?\\d+)?))(?=[^a-zA-Z_])\\b'
+                    'name': 'constant.numeric.float.lammps'
+                }
+            ]
+
+    'annotations':
+            {
+                'comment': 'Notes: FIXMEs, TODOs, NOTEs etc, etc ... FIXME: Look how to check init comment + change color ^\\s*(NOTE|OPTIMIZE|TODO|HACK|XXX|FIXME|BUG)\\s.*?:'
+                'match': '\\s(NOTE|OPTIMIZE|TODO|HACK|XXX|FIXME|BUG)(\\s.*?)?:'
+                'name': 'variable.other.single'
+            }
+    'operators_symbols':
+            {
+                'comment': 'Math operators. NOTE: I do notlike how brackets feels. FIXME: () not implemented yet. Square brackets are for index and not suppose to be here'
+                'match': 'NOPE\\(|NOPE\\)|\\[|\\]|-|\\+|\\*|\\|(\\||^)|\\^|\\%|(=|!)=|(<|>)=?|&&|!|/'
+                'name': 'keyword.operator'
+            }
