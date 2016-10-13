@@ -1,5 +1,8 @@
 # LAMMPS language support Atom
 
-Adds syntax highlighting and snippets to Python files in Atom.
+Adds syntax highlighting and snippets to LAMMPS files in Atom.
 
-Contributions are greatly appreciated. Please fork this repository and open a pull request to add snippets, make grammar tweaks, etc...
+[Image](./misc/seti.png)
+_Example with Seti [UI](https://github.com/jesseweed/seti-ui) and [syntax](https://github.com/jesseweed/seti-syntax)_
+
+If you have some feedback (bugs, enhancement, etc, etc...) please open an issue or just fork this repository and send a pull request.

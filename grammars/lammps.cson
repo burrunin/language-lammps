@@ -15,9 +15,11 @@
     {
         'comment': 'Commands that change the code flow, conditionals'
         'name': 'keyword.control.conditional.lammps'
-        'match': '\\b(if|elif|else|then|&)\\b'
+        'match': '\\b(if|elif|else|then)\\b'
     }
-
+    {
+        'include': '#line_breaker'
+    }
 
 
 
@@ -161,7 +163,7 @@
     }
     {
         'comment': 'LAMMPS section highlighting after titles seems to be two spaces before the normal printing. FIXME: this is a cheap fix'
-        'match': '^\\s{2}\\S.*'
+        'match': '^NOPE\\s{2}\\S.*'
         'name': 'punctuation.definition.comment'
     }
     {
@@ -234,36 +236,17 @@
     'constants_numeric':
         'comment': 'Numeric constants FIXME: Me he cargado los elementos de la forma 1.3, 1.4 etc.. FIXME: REVISE THIS'
         'patterns': [
-                {
-                    'match': '\\b[+-]?([0-9]*[.])?[0-9]+\\b'
-                    'name': 'constant.numeric.float.lammps'
-                }
-                {
-                    'match': '\\b(?i:(\\d+e[\\-\\+]?\\d+))\\b'
-                    'name': 'constant.numeric.float.lammps'
-                }
-                {
-                    'match': '(?<=[^0-9a-zA-Z_])(?i:(\\.\\d+(e[\\-\\+]?\\d+)?))\\b'
-                    'name': 'constant.numeric.float.lammps'
-                }
-                {
-                    'match': '\\b(?i:([1-9]+[0-9]*|0)L)\\b'
-                    'name': 'constant.numeric.integer.long.decimal.lammps'
-                }
-                {
-                    'match': '\\b([1-9]+[0-9]*|0)\\b'
-                    'name': 'constant.numeric.integer.decimal.lammps'
-                }
-                {
-                    'comment': 'LAMMPS constants. All of them are numeric, as booleans are just numbers in LAMMPS. But they are not recognized as such all the time e.g thermo off. FIXME: Is INF a constant in LAMMPS?'
-                    'match': '(?<= )(INF|PI|version|on|off|true|false|yes|no)(\\s|$)'
-                    'name': 'constant.numeric.lammps'
-                }
-                {
-                    'match': '\\b(?i:(\\d+\\.\\d*(e[\\-\\+]?\\d+)?))(?=[^a-zA-Z_])\\b'
-                    'name': 'constant.numeric.float.lammps'
-                }
-            ]
+            {
+                'comment': 'FIXME: I am not sure LAMMPS use .787 expressions'
+                'match': '\\b[+-]?(\\d*[.])?\\d+([eE][+-]?\\d*)?\\b'
+                'name': 'constant.numeric.lammps'
+            }
+            {
+                'comment': 'LAMMPS constants. All of them are numeric, as booleans are just numbers in LAMMPS. But they are not recognized as such all the time e.g thermo off. FIXME: Is INF a constant in LAMMPS?'
+                'match': '(?<= )(INF|PI|version|on|off|true|false|yes|no)(\\s|$)'
+                'name': 'constant.numeric.lammps'
+            }
+        ]
 
     'annotations':
             {
@@ -277,3 +260,15 @@
                 'match': 'NOPE\\(|NOPE\\)|\\[|\\]|-|\\+|\\*|\\|(\\||^)|\\^|\\%|(=|!)=|(<|>)=?|&&|!|/'
                 'name': 'keyword.operator'
             }
+    'line_breaker':
+        'comment': 'A line break in the code. It might have a simpler pattern. FIXME: this only work if it is the first thing in the line'
+        'patterns': [
+            {
+                'name': 'keyword.control.linebreak.lammps'
+                'match': '\\&\\s*(?=#)'
+            }
+            {
+                'name': 'keyword.control.linebreak.lammps'
+                'match': '\\&\\s*$'
+            }
+        ]
