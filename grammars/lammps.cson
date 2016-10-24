@@ -84,7 +84,7 @@
         ]
     }
     {
-        'comment': 'Formula/math mode FIXME: End up this. Add functions + equal style'
+        'comment': 'Formula/math mode FIXME: Add functions + equal style'
         'begin': '\\$\\('
         'end': '\\)'
         'name': 'math.mode'
@@ -98,6 +98,9 @@
             {
                 'include': '#operators_symbols'
             }
+            {
+                'include': '#parentheses'
+            }
         ]
     }
     {
@@ -110,12 +113,6 @@
     }
 
 
-    {
-        'comment': 'Example string, not used. Remove.'
-        'begin': 'NOPE\"'
-        'end': 'NOPE\"'
-        'name': 'string.quoted.double.block.lammps'
-    }
 
 
 
@@ -271,4 +268,39 @@
                 'name': 'keyword.control.linebreak.lammps'
                 'match': '\\&\\s*$'
             }
+        ]
+    'strings':
+        'comment': 'String support in variable definition. FIXME: fix with prints. This is ugly and I do not know how accurate is this. Does it catches all the expressions? Are variables expressed like v_x etc etc avaliable? end: \\1'
+        'patterns': [
+            {
+                'begin': '(?<=string )\''
+                'end': '\''
+                'name': 'string.quoted.double.block.lammps'
+                'patterns': [
+                    {
+                        'include': '#variables'
+                    }
+                ]
+            }
+            {
+                'begin': '(?<=string )\"'
+                'end': '\"'
+                'name': 'string.quoted.double.block.lammps'
+                'patterns': [
+                    {
+                        'include': '#variables'
+                    }
+                ]
+            }
+        ]
+    'parentheses':
+        'comment': 'Parentheses. FIXME FIXME: Alpha'
+        'begin': '\\('
+        'beginCaptures':
+         'name': 'punctuation.definition.parentheses.lammps'
+        'end': '\\)'
+        'patterns': [
+          {
+            'include': '$self'
+          }
         ]
