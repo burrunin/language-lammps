@@ -23,6 +23,7 @@
 
 
 
+
     {
         'include': '#constants_numeric'
     }
@@ -37,11 +38,6 @@
     }
 
 
-    {
-        'comment': 'Math functions. FIXME: add color'
-        'match': 'sqrt|exp|ln|log|abs|sin|cos|tan|asin|acos|atan|atan2|random|normal|ceil|floor|round|ramp|stagger|logfreq|logfreq2|stride|stride2|vdisplace|swiggle|cwiggle'
-        'name': 'function.math.lammps'
-    }
     {
         'comment': 'Group/region functions. FIXME: add color, fix ke'
         'match': 'count|mass|charge|xcm|vcm|fcm|bound|gyration|NOPEke|angmom|torque|inertia|omega'
@@ -84,24 +80,7 @@
         ]
     }
     {
-        'comment': 'Formula/math mode FIXME: Add functions + equal style'
-        'begin': '\\$\\('
-        'end': '\\)'
-        'name': 'math.mode'
-        'patterns': [
-            {
-                'include': '#variables'
-            }
-            {
-                'include': '#constants_numeric'
-            }
-            {
-                'include': '#operators_symbols'
-            }
-            {
-                'include': '#parentheses'
-            }
-        ]
+        'include': '#mode_math'
     }
     {
         'comment': 'FIXME: this is a poor example of how to do things, but its the best i got atm. Sometimes indicates strings.'
@@ -137,67 +116,10 @@
 
 
 
+    {
+        'include': '#log_files'
+    }
 
-    {
-        'comment': 'LAMMPS first output (the version). Is LAMMPS going to be around in the CI century? NOTE: All this section is probably temporary'
-        'match': '^LAMMPS \\(\\d{1,2} \\w{1,4} \\d{4}\\)'
-        'name': 'punctuation.definition.comment'
-    }
-    {
-        'comment': 'Error and warning output'
-        'match': '^(ERROR|WARNING): .+'
-        'name': 'variable.other.error'
-    }
-    {
-        'comment': 'Created and delated information'
-        'match': '^(Created|Deleted) .+'
-        'name': 'punctuation.definition.comment'
-    }
-    {
-        'comment': 'Titles + another fixed prints'
-        'match': '^(Neighbor list info ...|MPI task timing breakdown:|Minimization stats:|PotEng KinEng |---------------------------------------------------------------)$'
-        'name': 'punctuation.definition.comment'
-    }
-    {
-        'comment': 'LAMMPS section highlighting after titles seems to be two spaces before the normal printing. FIXME: this is a cheap fix'
-        'match': '^NOPE\\s{2}\\S.*'
-        'name': 'punctuation.definition.comment'
-    }
-    {
-        'comment': 'Another misc information'
-        'match': '^(Total # of neighbors|Ave neighs/atom|Neighbor list builds|Dangerous builds|Memory usage per processor) = .+'
-        'name': 'punctuation.definition.comment'
-    }
-    {
-        'comment': 'Tables'
-        'match': '^(Section |Pair    |Neigh   |Comm    |Output  |Modify  |Other   )\\|.+'
-        'name': 'punctuation.definition.comment'
-    }
-    {
-        'comment': 'Histograms'
-        'match': '^(Nlocal:    |Histogram: |Nghost:    |Histogram: |Neighs:    |Histogram: ).+'
-        'name': 'punctuation.definition.comment'
-    }
-    {
-        'comment': 'Lattice info'
-        'match': '^Lattice spacing in .+'
-        'name': 'punctuation.definition.comment'
-    }
-    {
-        'comment': 'CPU use info. FIXME: RegExp is taking the numbers first'
-        'match': '% CPU use with 1 MPI tasks x no OpenMP threads$'
-        'name': 'punctuation.definition.comment'
-    }
-    {
-        'comment': 'Loop time info'
-        'match': '^Loop time of .+ on \\d+ procs for \\d+ steps with \\d+ atoms$'
-        'name': 'punctuation.definition.comment'
-    }
-    {
-        'comment': 'FIXME: Test'
-        'match': '^\0.*'
-        'name': 'punctuation.definition.comment'
-    }
 ]
 
 'repository':
@@ -244,12 +166,35 @@
                 'name': 'constant.numeric.lammps'
             }
         ]
+    'mode_math':
+
+        'comment': 'Formula/math mode FIXME: End up this. Add functions + equal style'
+        'begin': '\\$\\('
+        'end': '\\)'
+        'name': 'math.mode'
+        'patterns': [
+            {
+                'include': '#variables'
+            }
+            {
+                'include': '#constants_numeric'
+            }
+            {
+                'include': '#operators_symbols'
+            }
+            {
+                'include': '#parentheses'
+            }
+            {
+                'include': '#functions_math'
+            }
+        ]
 
     'annotations':
             {
                 'comment': 'Notes: FIXMEs, TODOs, NOTEs etc, etc ... FIXME: Look how to check init comment + change color ^\\s*(NOTE|OPTIMIZE|TODO|HACK|XXX|FIXME|BUG)\\s.*?:'
-                'match': '\\s(NOTE|OPTIMIZE|TODO|HACK|XXX|FIXME|BUG)(\\s.*?)?:'
-                'name': 'variable.other.single'
+                'match': '\\s(NOTE|OPTIMIZE|TODO|HACK|XXX|FIXME|BUG)(\\s.*)?:.'
+                'name': 'markup.bold'
             }
     'operators_symbols':
             {
@@ -301,6 +246,81 @@
         'end': '\\)'
         'patterns': [
           {
-            'include': '$self'
+            'include': '$base'
           }
+        ]
+    'functions_math':
+        'comment': 'Math functions. FIXME: this is mostly wrong'
+        'match': '(sqrt|exp|ln|log|abs|sin|cos|tan|asin|acos|atan|atan2|random|normal|ceil|floor|round|ramp|stagger|logfreq|logfreq2|stride|stride2|vdisplace|swiggle|cwiggle)'
+        'name': 'constant.function.math.lammps'
+    'log_files':
+        'name': 'meta.log'
+        'begin': '^LAMMPS \\(\\d{1,2} \\w{1,4} \\d{4}\\)'
+        'end': 'hithere'
+        'patterns': [
+            {
+                'comment': 'Error and warning output'
+                'match': '^(ERROR|WARNING): .+'
+                'name': 'invalid.deprecated'
+            }
+            {
+                'comment': 'Created and delated information'
+                'match': '^(Created|Deleted) .+'
+                'name': 'markup.bold'
+            }
+            {
+                'comment': 'Another misc information'
+                'match': '^(Total # of neighbors|Ave neighs/atom|Neighbor list builds|Dangerous builds|Memory usage per processor) = .+'
+                'name': 'markup.bold'
+            }
+            {
+                'comment': 'Lattice info'
+                'match': '^Lattice spacing in .+'
+                'name': 'markup.bold'
+            }
+            {
+                'comment': 'CPU use info. FIXME: RegExp is taking the numbers first'
+                'match': '% CPU use with 1 MPI tasks x no OpenMP threads$'
+                'name': 'markup.bold'
+            }
+            {
+                'comment': 'Loop time info'
+                'match': '^Loop time of .+ on \\d+ procs for \\d+ steps with \\d+ atoms$'
+                'name': 'markup.bold'
+            }
+            {
+                'comment': 'Titles + another fixed prints'
+                'match': '^(Neighbor list info ...|MPI task timing breakdown:|Minimization stats:|PotEng KinEng |---------------------------------------------------------------)$'
+                'name': 'markup.bold'
+            }
+            {
+                'begin': '#'
+                'end': '$'
+                'name': 'markup.italic'
+            }
+            {
+                'comment': 'Commands that change the simulation behaviour or input/output. FIXME: What do we do with clear, log, shell, variable? What is doing vt here?'
+                'match': '^\\s*(angle_coeff|clear|angle_style|atom_modify|atom_style|balance|bond_coeff|bond_style|boundary|side|change_box|clearcomm_modify|comm_style|compute_modify|compute|create_atoms|create_bonds|create_box|delete_atoms|delete_bonds|dielectric|dihedral_coeff|dihedral_style|dimension|displace_atoms|dump_modify|dump|echo|fix_modify|fix|group|improper_coeff|improper_style|kspace_modify|kspace_style|label|lattice|log|mass|minimize|min_modify|min_style|molecule|neb|neigh_modify|neighbor|newton|next|package|pair_coeff|pair_modify|pair_style|pair_write|partition|prd|print|processors|python|quit|read_data|read_dump|read_restart|region|replicate|reset_timestep|restart|run|run_style|set|shell|special_bonds|suffix|tad|temper|thermo_modify|thermo_style|thermo|timestep|uncompute|undump|unfix|units|variable|velocity|write_data|write_dump|write_restart|nvt|wall\\.*|ave\\.*|include|jump|label|next|if)\\b.*'
+                'name': 'comment.log'
+            }
+            {
+                'comment': 'LAMMPS section highlighting after titles seems to be two spaces before the normal printing. FIXME: this is a cheap fix'
+                'match': '^NOPE\\s{2}\\S.*'
+                'name': 'punctuation.definition.comment'
+            }
+            {
+                'comment': 'Tables'
+                'match': '^(Section |Pair    |Neigh   |Comm    |Output  |Modify  |Other   )\\|.+'
+                'name': 'punctuation.definition.comment'
+            }
+            {
+                'comment': 'Histograms'
+                'match': '^(Nlocal:    |Histogram: |Nghost:    |Histogram: |Neighs:    |Histogram: ).+'
+                'name': 'punctuation.definition.comment'
+            }
+            {
+                'comment': 'Processors'
+                'match': '\\d+ by \\d+ by \\d+ MPI processor grid'
+                'name': 'markup.bold'
+            }
         ]
