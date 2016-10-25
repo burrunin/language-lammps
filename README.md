@@ -2,7 +2,7 @@
 
 Adds syntax highlighting and snippets to LAMMPS files in Atom.
 
-![Image](./misc/seti.png)
+![highlighting](https://raw.githubusercontent.com/brunoduran/language-lammps/master/misc/seti.png)
 
 _Example with Seti [UI](https://github.com/jesseweed/seti-ui) and [syntax](https://github.com/jesseweed/seti-syntax)_
 
