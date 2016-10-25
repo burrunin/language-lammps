@@ -323,4 +323,9 @@
                 'match': '\\d+ by \\d+ by \\d+ MPI processor grid'
                 'name': 'markup.bold'
             }
+            {
+                'comment': 'Created atoms'
+                'match': '^\\d+ atoms in group \\w+'
+                'name': 'markup.bold'
+            }
         ]
