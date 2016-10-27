@@ -21,6 +21,12 @@
         'include': '#line_breaker'
     }
 
+    {
+        'include': '#string_single_mixed'
+    }
+    {
+        'include': '#string_double_mixed'
+    }
 
 
 
@@ -81,11 +87,6 @@
     }
     {
         'include': '#mode_math'
-    }
-    {
-        'comment': 'FIXME: this is a poor example of how to do things, but its the best i got atm. Sometimes indicates strings.'
-        'match': '(\'|\"){1,3}'
-        'name': 'keyword.operator.assignment'
     }
     {
         'include': '#variables'
@@ -153,7 +154,7 @@
             }
         ]
     'constants_numeric':
-        'comment': 'Numeric constants FIXME: Me he cargado los elementos de la forma 1.3, 1.4 etc.. FIXME: REVISE THIS'
+        'comment': 'Numeric constants'
         'patterns': [
             {
                 'comment': 'FIXME: I am not sure LAMMPS use .787 expressions'
@@ -192,7 +193,7 @@
 
     'annotations':
             {
-                'comment': 'Notes: FIXMEs, TODOs, NOTEs etc, etc ... FIXME: Look how to check init comment + change color ^\\s*(NOTE|OPTIMIZE|TODO|HACK|XXX|FIXME|BUG)\\s.*?:'
+                'comment': 'Notes: FIXMEs, TODOs, NOTEs etc, etc ... colour'
                 'match': '\\s(NOTE|OPTIMIZE|TODO|HACK|XXX|FIXME|BUG)(\\s.*)?:.'
                 'name': 'markup.bold'
             }
@@ -203,7 +204,7 @@
                 'name': 'keyword.operator'
             }
     'line_breaker':
-        'comment': 'A line break in the code. It might have a simpler pattern. FIXME: this only work if it is the first thing in the line'
+        'comment': 'A line break in the code. It might have a simpler pattern'
         'patterns': [
             {
                 'name': 'keyword.control.linebreak.lammps'
@@ -214,32 +215,8 @@
                 'match': '\\&\\s*$'
             }
         ]
-    'strings':
-        'comment': 'String support in variable definition. FIXME: fix with prints. This is ugly and I do not know how accurate is this. Does it catches all the expressions? Are variables expressed like v_x etc etc avaliable? end: \\1'
-        'patterns': [
-            {
-                'begin': '(?<=string )\''
-                'end': '\''
-                'name': 'string.quoted.double.block.lammps'
-                'patterns': [
-                    {
-                        'include': '#variables'
-                    }
-                ]
-            }
-            {
-                'begin': '(?<=string )\"'
-                'end': '\"'
-                'name': 'string.quoted.double.block.lammps'
-                'patterns': [
-                    {
-                        'include': '#variables'
-                    }
-                ]
-            }
-        ]
     'parentheses':
-        'comment': 'Parentheses. FIXME FIXME: Alpha'
+        'comment': 'Parentheses. FIXME: Alpha, does not go back to mathmode'
         'begin': '\\('
         'beginCaptures':
          'name': 'punctuation.definition.parentheses.lammps'
@@ -329,3 +306,20 @@
                 'name': 'markup.bold'
             }
         ]
+    'string_single_mixed':
+        'comment': 'NOTE: We should add pure version (without the $self)'
+        'begin': '\''
+        'end': '\''
+        'name': 'string.quoted.single'
+        'patterns': [{
+            'include': '$self'
+        }]
+
+    'string_double_mixed':
+        'comment': 'NOTE: We should add pure version (without the $self)'
+        'begin': '"'
+        'end': '"'
+        'name': 'string.quoted.double'
+        'patterns': [{
+            'include': '$self'
+        }]
