@@ -3,19 +3,23 @@
 'fileTypes': ['lmp', 'lmps', 'lammps']
 'patterns': [
     {
-        'comment': 'Comments'
+        'include': '#line_breaker'
+    }
+    {
+        'comment': 'Comments NOTE: [^&]$ and (?<!&)\\n does not work, should not be needed to include line_breaker here'
         'begin': '#'
-        'end': '$'
+        'end': '(?<!&)\\s*\\n'
         'name': 'punctuation.definition.comment'
         'patterns': [
             {
-                'include': '#annotations'
+                'include': 'text.todo'
+            }
+            {
+                'include': '#line_breaker'
             }
         ]
     }
-    {
-        'include': '#line_breaker'
-    }
+
 
 
     {
@@ -211,7 +215,7 @@
 
     'annotations':
             {
-                'comment': 'Notes: FIXMEs, TODOs, NOTEs etc, etc ... colour'
+                'comment': 'NOTES: Turned off, need to add FIXMEs, TODOs, NOTEs etc, etc ... colour'
                 'match': '\\s(NOTE|OPTIMIZE|TODO|HACK|XXX|FIXME|BUG)(\\s.*)?:.'
                 'name': 'markup.bold'
             }
@@ -223,7 +227,7 @@
             }
     'line_breaker':
         'comment': 'A line break in the code'
-        'match': '\\&$'
+        'match': '\\&\\s*$'
         'name': 'keyword.control.linebreak.lammps'
     'parentheses':
         'comment': 'Parentheses. FIXME: Alpha, does not go back to mathmode'
