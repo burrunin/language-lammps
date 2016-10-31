@@ -1,0 +1,34 @@
+# Rule number (2) says that after a number sign the line is a comment
+
+# Rule number (1) says that if the last printable character of a line &
+  (i.e. not whitespaces) is an ampersand the next line is considered to be &
+  part of the command. Even if we are in the comments!
+
+# Rule number (5) says that every line is &
+  broken into words separated by whitespaces
+
+# Rule number (6) says that the first word in the line is the command and &
+  the following are arguments. The package only highlights valid commands and &
+  diferenciate between simulation commands and control commands
+
+variable a equal 6
+
+label checkpoint
+
+# Rule number (3) says that the line is scanned for $ signs as reference for &
+  variables. FIXME: talk about the math mode
+
+print $a
+
+# Rule number (7) says that you can use quotes to treat a bunch of words as a &
+  single argument
+
+print "I have $a fingers in every hand!"
+
+# if a then "print 'by'" else "jump checkpoint" FIXME: end up this
+
+# NOTE: There are lots of things that still are broken &
+                      (or are ugly) &
+            (specially if you use ampersands!) &
+      (do not use ampersands, they make the code ugly) &
+              but it works more or less now
