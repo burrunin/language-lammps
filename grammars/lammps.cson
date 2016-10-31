@@ -3,14 +3,30 @@
 'fileTypes': ['lmp', 'lmps', 'lammps']
 'patterns': [
     {
+        'comment': 'Comments'
+        'begin': '#'
+        'end': '$'
+        'name': 'punctuation.definition.comment'
+        'patterns': [
+            {
+                'include': '#annotations'
+            }
+        ]
+    }
+    {
+        'include': '#line_breaker'
+    }
+
+
+    {
         'comment': 'Commands that change the simulation behaviour or input/output. FIXME: What do we do with clear, log, shell, variable? What is doing vt here?'
-        'match': '(^|(?<=(\"|\')))\\s*(angle_coeff|clear|angle_style|atom_modify|atom_style|balance|bond_coeff|bond_style|boundary|side|change_box|clearcomm_modify|comm_style|compute_modify|compute|create_atoms|create_bonds|create_box|delete_atoms|delete_bonds|dielectric|dihedral_coeff|dihedral_style|dimension|displace_atoms|dump_modify|dump|echo|fix_modify|fix|group|improper_coeff|improper_style|kspace_modify|kspace_style|label|lattice|log|mass|minimize|min_modify|min_style|molecule|neb|neigh_modify|neighbor|newton|next|package|pair_coeff|pair_modify|pair_style|pair_write|partition|prd|print|processors|python|quit|read_data|read_dump|read_restart|region|replicate|reset_timestep|restart|run|run_style|set|shell|special_bonds|suffix|tad|temper|thermo_modify|thermo_style|thermo|timestep|uncompute|undump|unfix|units|variable|velocity|write_data|write_dump|write_restart|nvt|wall\\.*|ave\\.*)\\b'
+        'match': '(^|(?<=(\"|\')))\\s*(angle_coeff|clear|angle_style|atom_modify|atom_style|balance|bond_coeff|bond_style|boundary|side|change_box|clearcomm_modify|comm_style|compute_modify|compute|create_atoms|create_bonds|create_box|delete_atoms|delete_bonds|dielectric|dihedral_coeff|dihedral_style|dimension|displace_atoms|dump_modify|dump|echo|fix_modify|fix|group|improper_coeff|improper_style|kspace_modify|kspace_style|lattice|log|mass|minimize|min_modify|min_style|molecule|neb|neigh_modify|neighbor|newton|next|package|pair_coeff|pair_modify|pair_style|pair_write|partition|prd|print|processors|python|quit|read_data|read_dump|read_restart|region|replicate|reset_timestep|restart|run|run_style|set|shell|special_bonds|suffix|tad|temper|thermo_modify|thermo_style|thermo|timestep|uncompute|undump|unfix|units|variable|velocity|write_data|write_dump|write_restart|nvt|wall\\.*|ave\\.*)\\b'
         'name': 'support.function.builtin.lammps'
     }
     {
         'comment': 'Commands that change the code flow'
         'name': 'keyword.control.conditional.lammps'
-        'match': '(^|(?<=(\"|\')))\\s*(include|jump|label|next)'
+        'match': '(^|(?<=(\"|\')))\\s*(include|jump|label|next)\\b'
     }
     {
         'comment': 'Commands that change the code flow, conditionals'
@@ -18,9 +34,11 @@
         'match': '\\b(if|elif|else|then)\\b'
     }
     {
-        'include': '#line_breaker'
+        'include': '#string_single_pure'
     }
-
+    {
+        'include': '#string_double_pure'
+    }
     {
         'include': '#string_single_mixed'
     }
@@ -74,22 +92,16 @@
 
 
 
-    {
-        'comment': 'Comments'
-        'begin': '#'
-        'end': '$'
-        'name': 'punctuation.definition.comment'
-        'patterns': [
-            {
-                'include': '#annotations'
-            }
-        ]
-    }
+
     {
         'include': '#mode_math'
     }
     {
-        'include': '#variables'
+        'include': '#variables_dollar'
+    }
+    {
+        'comment': 'This should not be here probably...'
+        'include': '#variables_other'
     }
 
 
@@ -124,13 +136,29 @@
 ]
 
 'repository':
-    'variables':
-        'comment': 'Reference to variables'
+    'variables_other':
+        'comment': 'Reference to variables. FIXME: this should be divided in two parts. $ variables (that works everywhere) and v_... variables that works only in some places'
         'patterns': [
             {
                 'match': '[cfvCFV]_\\w+'
                 'name': 'variable.other.reference'
             }
+            {
+                'name': 'variable.other.definition'
+                'match': '(?<=variable)\\s*\\w+'
+            }
+            {
+                'comment': 'Definition of variables with compute command. NOTE: Could we use only one RegExp with variable/fix'
+                'name': 'variable.other.definition'
+                'match': '(?<=compute)\\s*\\w+'
+            }
+            {
+                'name': 'variable.other.definition'
+                'match': '(?<=fix)\\s*\\w+'
+            }
+        ]
+    'variables_dollar':
+        'patterns': [
             {
                 'match': '\\$\\{\\w+\\}'
                 'name': 'variable.other.key'
@@ -139,25 +167,12 @@
                 'match': '\\$\\w'
                 'name': 'variable.other.single'
             }
-            {
-                'name': 'variable.other.definition.lammps'
-                'match': '(?<=variable)\\s*\\w+'
-            }
-            {
-                'comment': 'Definition of variables with compute command. NOTE: Could we use only one RegExp with variable/fix'
-                'name': 'variable.other.definition.lammps'
-                'match': '(?<=compute)\\s*\\w+'
-            }
-            {
-                'name': 'variable.other.definition.lammps'
-                'match': '(?<=fix)\\s*\\w+'
-            }
         ]
     'constants_numeric':
         'comment': 'Numeric constants'
         'patterns': [
             {
-                'comment': 'FIXME: I am not sure LAMMPS use .787 expressions'
+                'comment': 'FIXME: I am not sure LAMMPS uses .787 expressions'
                 'match': '\\b[+-]?(\\d*[.])?\\d+([eE][+-]?\\d*)?\\b'
                 'name': 'constant.numeric.lammps'
             }
@@ -175,7 +190,10 @@
         'name': 'math.mode'
         'patterns': [
             {
-                'include': '#variables'
+                'include': '#variables_dollar'
+            }
+            {
+                'include': '#variables_other'
             }
             {
                 'include': '#constants_numeric'
@@ -204,17 +222,9 @@
                 'name': 'keyword.operator'
             }
     'line_breaker':
-        'comment': 'A line break in the code. It might have a simpler pattern'
-        'patterns': [
-            {
-                'name': 'keyword.control.linebreak.lammps'
-                'match': '\\&\\s*(?=#)'
-            }
-            {
-                'name': 'keyword.control.linebreak.lammps'
-                'match': '\\&\\s*$'
-            }
-        ]
+        'comment': 'A line break in the code'
+        'match': '\\&$'
+        'name': 'keyword.control.linebreak.lammps'
     'parentheses':
         'comment': 'Parentheses. FIXME: Alpha, does not go back to mathmode'
         'begin': '\\('
@@ -307,7 +317,7 @@
             }
         ]
     'string_single_mixed':
-        'comment': 'NOTE: We should add pure version (without the $self)'
+        'comment': 'This is for places in the code where the code is going to be executed in the future (as in then... statements)'
         'begin': '\''
         'end': '\''
         'name': 'string.quoted.single'
@@ -316,10 +326,28 @@
         }]
 
     'string_double_mixed':
-        'comment': 'NOTE: We should add pure version (without the $self)'
+        'comment': 'This is for places in the code where the code is going to be executed in the future (as in then... statements)'
         'begin': '"'
         'end': '"'
         'name': 'string.quoted.double'
         'patterns': [{
             'include': '$self'
         }]
+    'string_single_pure':
+        'comment': 'NOTE: This is not finished, it is missing in parts like variable string ...'
+        'begin': '(?<=print )\s*\''
+        'end': '\''
+        'name': 'string.quoted.single'
+        'patterns': [
+            {
+                'include': '#variables_dollar'
+            }]
+    'string_double_pure':
+        'comment': 'NOTE: This is not finished, it is missing in parts like variable string ...'
+        'begin': '(?<=print )\s*"'
+        'end': '"'
+        'name': 'string.quoted.double'
+        'patterns': [
+            {
+                'include': '#variables_dollar'
+            }]
