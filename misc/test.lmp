@@ -11,24 +11,29 @@
   the following are arguments. The package only highlights valid commands and &
   diferenciate between simulation commands and control commands
 
-variable a equal 6
+variable a equal 3
 
-label checkpoint
+label eat
 
 # Rule number (3) says that the line is scanned for $ signs as reference for &
-  variables. FIXME: talk about the math mode
+  variables.
+# FIXME: talk about the math mode, simulation commands and control command?
 
-print $a
+units metal
+
+variable a equal $(v_a - 1)
 
 # Rule number (7) says that you can use quotes to treat a bunch of words as a &
   single argument
 
-print "I have $a fingers in every hand!"
+print "I have $a apples in my pocket!"
+
+if $a then "jump SELF eat" else "print ':('"
 
 # if a then "print 'by'" else "jump checkpoint" FIXME: end up this
 
 # NOTE: There are lots of things that still are broken &
                       (or are ugly) &
             (specially if you use ampersands!) &
-      (do not use ampersands, they make the code ugly) &
+          (do not use ampersands, they are ugly) &
               but it works more or less now

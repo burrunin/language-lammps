@@ -23,19 +23,19 @@
         'include': '#variables_dollar'
     }
     {
-        'comment': 'Commands that change the simulation behaviour or input/output. FIXME: What do we do with clear, log, shell, variable? What is doing vt here?'
-        'match': '(^|(?<=(\"|\')))\\s*(angle_coeff|clear|angle_style|atom_modify|atom_style|balance|bond_coeff|bond_style|boundary|side|change_box|clearcomm_modify|comm_style|compute_modify|compute|create_atoms|create_bonds|create_box|delete_atoms|delete_bonds|dielectric|dihedral_coeff|dihedral_style|dimension|displace_atoms|dump_modify|dump|echo|fix_modify|fix|group|improper_coeff|improper_style|kspace_modify|kspace_style|lattice|log|mass|minimize|min_modify|min_style|molecule|neb|neigh_modify|neighbor|newton|next|package|pair_coeff|pair_modify|pair_style|pair_write|partition|prd|print|processors|python|quit|read_data|read_dump|read_restart|region|replicate|reset_timestep|restart|run|run_style|set|shell|special_bonds|suffix|tad|temper|thermo_modify|thermo_style|thermo|timestep|uncompute|undump|unfix|units|variable|velocity|write_data|write_dump|write_restart|nvt|wall\\.*|ave\\.*)\\b'
+        'comment': 'Commands that change the simulation behaviour or input/output. FIXME: What is doing vt here?'
+        'match': '(^|(?<=(\"|\')))\\s*(angle_coeff|angle_style|atom_modify|atom_style|balance|bond_coeff|bond_style|boundary|side|change_box|clearcomm_modify|comm_style|compute_modify|compute|create_atoms|create_bonds|create_box|delete_atoms|delete_bonds|dielectric|dihedral_coeff|dihedral_style|dimension|displace_atoms|dump_modify|dump|fix_modify|fix|group|improper_coeff|improper_style|kspace_modify|kspace_style|lattice|mass|minimize|min_modify|min_style|molecule|neb|neigh_modify|neighbor|newton|package|pair_coeff|pair_modify|pair_style|pair_write|partition|prd|processors|read_data|read_dump|read_restart|region|replicate|reset_timestep|restart|run|run_style|set|special_bonds|suffix|tad|temper|thermo_modify|thermo_style|thermo|timestep|uncompute|undump|unfix|units|velocity|write_data|write_dump|write_restart|nvt|wall\\.*|ave\\.*)\\b'
         'name': 'support.function.builtin.lammps'
     }
     {
         'comment': 'Commands that change the code flow'
         'name': 'keyword.control.conditional.lammps'
-        'match': '(^|(?<=(\"|\')))\\s*(include|jump|label|next)\\b'
+        'match': '(^|(?<=(\"|\')))\\s*(clear|echo|if|include|jump|label|log|next|print|python|quit|shell|variable)\\b'
     }
     {
-        'comment': 'Commands that change the code flow, conditionals'
+        'comment': 'Commands that change the code flow, conditionals. NOTE: You can improve this.'
         'name': 'keyword.control.conditional.lammps'
-        'match': '\\b(if|elif|else|then)\\b'
+        'match': '\\b(elif|else|then)\\b'
     }
     {
         'include': '#string_single_pure'
@@ -129,12 +129,6 @@
     }
 
 
-
-
-    {
-        'include': '#log_files'
-    }
-
 ]
 
 'repository':
@@ -142,21 +136,27 @@
         'comment': 'Reference to variables. FIXME: this should be divided in two parts. $ variables (that works everywhere) and v_... variables that works only in some places'
         'patterns': [
             {
+                'comment': 'NOTE: I should improve this'
                 'match': '[cfvCFV]_\\w+'
                 'name': 'variable.other.reference'
             }
             {
                 'name': 'variable.other.definition'
-                'match': '(?<=variable)\\s*\\w+'
+                'match': '(?<=variable)\\s+\\w+'
             }
             {
                 'comment': 'Definition of variables with compute command. NOTE: Could we use only one RegExp with variable/fix'
                 'name': 'variable.other.definition'
-                'match': '(?<=compute)\\s*\\w+'
+                'match': '(?<=compute)\\s+\\w+'
+            }
+            {
+                'comment': 'Definition of variables with compute command. NOTE: Could we use only one RegExp with variable/fix'
+                'name': 'variable.other.definition'
+                'match': '(?<=next)(\\s+\\w+)+'
             }
             {
                 'name': 'variable.other.definition'
-                'match': '(?<=fix)\\s*\\w+'
+                'match': '(?<=fix)\\s+\\w+'
             }
         ]
     'variables_dollar':
@@ -242,82 +242,6 @@
         'comment': 'Math functions. FIXME: this is mostly wrong'
         'match': '(sqrt|exp|ln|log|abs|sin|cos|tan|asin|acos|atan|atan2|random|normal|ceil|floor|round|ramp|stagger|logfreq|logfreq2|stride|stride2|vdisplace|swiggle|cwiggle)'
         'name': 'constant.function.math.lammps'
-    'log_files':
-        'name': 'meta.log'
-        'begin': '^LAMMPS \\(\\d{1,2} \\w{1,4} \\d{4}\\)'
-        'end': 'hithere'
-        'patterns': [
-            {
-                'comment': 'Error and warning output'
-                'match': '^(ERROR|WARNING): .+'
-                'name': 'invalid.deprecated'
-            }
-            {
-                'comment': 'Created and delated information'
-                'match': '^(Created|Deleted) .+'
-                'name': 'markup.bold'
-            }
-            {
-                'comment': 'Another misc information'
-                'match': '^(Total # of neighbors|Ave neighs/atom|Neighbor list builds|Dangerous builds|Memory usage per processor) = .+'
-                'name': 'markup.bold'
-            }
-            {
-                'comment': 'Lattice info'
-                'match': '^Lattice spacing in .+'
-                'name': 'markup.bold'
-            }
-            {
-                'comment': 'CPU use info. FIXME: RegExp is taking the numbers first'
-                'match': '% CPU use with 1 MPI tasks x no OpenMP threads$'
-                'name': 'markup.bold'
-            }
-            {
-                'comment': 'Loop time info'
-                'match': '^Loop time of .+ on \\d+ procs for \\d+ steps with \\d+ atoms$'
-                'name': 'markup.bold'
-            }
-            {
-                'comment': 'Titles + another fixed prints'
-                'match': '^(Neighbor list info ...|MPI task timing breakdown:|Minimization stats:|PotEng KinEng |---------------------------------------------------------------)$'
-                'name': 'markup.bold'
-            }
-            {
-                'begin': '#'
-                'end': '$'
-                'name': 'markup.italic'
-            }
-            {
-                'comment': 'Commands that change the simulation behaviour or input/output. FIXME: What do we do with clear, log, shell, variable? What is doing vt here?'
-                'match': '^\\s*(angle_coeff|clear|angle_style|atom_modify|atom_style|balance|bond_coeff|bond_style|boundary|side|change_box|clearcomm_modify|comm_style|compute_modify|compute|create_atoms|create_bonds|create_box|delete_atoms|delete_bonds|dielectric|dihedral_coeff|dihedral_style|dimension|displace_atoms|dump_modify|dump|echo|fix_modify|fix|group|improper_coeff|improper_style|kspace_modify|kspace_style|label|lattice|log|mass|minimize|min_modify|min_style|molecule|neb|neigh_modify|neighbor|newton|next|package|pair_coeff|pair_modify|pair_style|pair_write|partition|prd|print|processors|python|quit|read_data|read_dump|read_restart|region|replicate|reset_timestep|restart|run|run_style|set|shell|special_bonds|suffix|tad|temper|thermo_modify|thermo_style|thermo|timestep|uncompute|undump|unfix|units|variable|velocity|write_data|write_dump|write_restart|nvt|wall\\.*|ave\\.*|include|jump|label|next|if)\\b.*'
-                'name': 'comment.log'
-            }
-            {
-                'comment': 'LAMMPS section highlighting after titles seems to be two spaces before the normal printing. FIXME: this is a cheap fix'
-                'match': '^NOPE\\s{2}\\S.*'
-                'name': 'punctuation.definition.comment'
-            }
-            {
-                'comment': 'Tables'
-                'match': '^(Section |Pair    |Neigh   |Comm    |Output  |Modify  |Other   )\\|.+'
-                'name': 'punctuation.definition.comment'
-            }
-            {
-                'comment': 'Histograms'
-                'match': '^(Nlocal:    |Histogram: |Nghost:    |Histogram: |Neighs:    |Histogram: ).+'
-                'name': 'punctuation.definition.comment'
-            }
-            {
-                'comment': 'Processors'
-                'match': '\\d+ by \\d+ by \\d+ MPI processor grid'
-                'name': 'markup.bold'
-            }
-            {
-                'comment': 'Created atoms'
-                'match': '^\\d+ atoms in group \\w+'
-                'name': 'markup.bold'
-            }
-        ]
     'string_single_mixed':
         'comment': 'This is for places in the code where the code is going to be executed in the future (as in then... statements)'
         'begin': '\''
