@@ -1,6 +1,6 @@
 {
   "name": "language-lammps",
-  "version": "2.1.3",
+  "version": "3.0.0",
   "main": "./lib/language-lammps",
   "description": "LAMMPS language support in Atom",
   "keywords": [],
