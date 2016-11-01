@@ -50,6 +50,17 @@
         'include': '#string_double_mixed'
     }
 
+    {
+        'comment': 'Shell mode. FIXME: Untested'
+        'begin': '(?<=shell )'
+        'end': '$'
+        'name': 'meta.embedded'
+        'patterns': [
+            {
+                'include': 'source.shell'
+            }
+        ]
+    }
 
 
     {
