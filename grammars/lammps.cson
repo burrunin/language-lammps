@@ -271,7 +271,8 @@
             'include': '$self'
         }]
     'string_single_pure':
-        'comment': 'NOTE: This is not finished, it is missing in parts like variable string ...'
+        'comment': 'NOTE: This includes unquoted strings, which is probably a bad idea. This is not finished, it is missing in parts like variable string ...'
+        'match': '((?<=print )|(?<= string ))\s*[^ \'"#&]+'
         'begin': '((?<=print )|(?<= string ))\s*\''
         'end': '\''
         'name': 'string.quoted.single'
