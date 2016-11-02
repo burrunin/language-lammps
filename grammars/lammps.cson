@@ -272,7 +272,7 @@
         }]
     'string_single_pure':
         'comment': 'NOTE: This is not finished, it is missing in parts like variable string ...'
-        'begin': '(?<=print )\s*\''
+        'begin': '((?<=print )|(?<= string ))\s*\''
         'end': '\''
         'name': 'string.quoted.single'
         'patterns': [
@@ -281,7 +281,7 @@
             }]
     'string_double_pure':
         'comment': 'NOTE: This is not finished, it is missing in parts like variable string ...'
-        'begin': '(?<=print )\s*"'
+        'begin': '((?<=print )|(?<= string ))\s*"'
         'end': '"'
         'name': 'string.quoted.double'
         'patterns': [

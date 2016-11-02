@@ -11,7 +11,9 @@
   the following are arguments. The package only highlights valid commands and &
   diferenciate between simulation commands and control commands
 
-variable a equal 3
+variable apples equal 3
+
+units metal
 
 label eat
 
@@ -19,16 +21,14 @@ label eat
   variables.
 # FIXME: talk about the math mode, simulation commands and control command?
 
-units metal
-
-variable a equal $(v_a - 1)
+variable apples equal $(v_apples - 1)
 
 # Rule number (7) says that you can use quotes to treat a bunch of words as a &
   single argument
 
-print "I have $a apples in my pocket!"
+print "I have ${apples} apples in my pocket!"
 
-if $a then "jump SELF eat" else "print ':('"
+if ${apples} then "jump SELF eat" else "print ':('"
 
 # if a then "print 'by'" else "jump checkpoint" FIXME: end up this
 
