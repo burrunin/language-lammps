@@ -24,7 +24,7 @@
     }
     {
         'comment': 'Commands that change the simulation behaviour or input/output. FIXME: What is doing vt here?'
-        'match': '(^|(?<=(\"|\')))\\s*(angle_coeff|angle_style|atom_modify|atom_style|balance|bond_coeff|bond_style|boundary|side|change_box|clearcomm_modify|comm_style|compute_modify|compute|create_atoms|create_bonds|create_box|delete_atoms|delete_bonds|dielectric|dihedral_coeff|dihedral_style|dimension|displace_atoms|dump_modify|dump|fix_modify|fix|group|improper_coeff|improper_style|kspace_modify|kspace_style|lattice|mass|minimize|min_modify|min_style|molecule|neb|neigh_modify|neighbor|newton|package|pair_coeff|pair_modify|pair_style|pair_write|partition|prd|processors|read_data|read_dump|read_restart|region|replicate|reset_timestep|restart|run|run_style|set|special_bonds|suffix|tad|temper|thermo_modify|thermo_style|thermo|timestep|uncompute|undump|unfix|units|velocity|write_data|write_dump|write_restart|nvt|wall\\.*|ave\\.*)\\b'
+        'match': '(^|(?<=(\"|\')))\\s*(angle_coeff|angle_style|atom_modify|atom_style|balance|bond_coeff|bond_style|boundary|side|change_box|clearcomm_modify|comm_style|compute_modify|compute|create_atoms|create_bonds|create_box|delete_atoms|delete_bonds|dielectric|dihedral_coeff|dihedral_style|dimension|displace_atoms|dump_modify|dump|fix_modify|fix|group|improper_coeff|info|improper_style|kspace_modify|kspace_style|lattice|mass|minimize|min_modify|min_style|molecule|neb|neigh_modify|neighbor|newton|package|pair_coeff|pair_modify|pair_style|pair_write|partition|prd|processors|read_data|read_dump|read_restart|region|replicate|reset_timestep|restart|run|run_style|set|special_bonds|suffix|tad|temper|thermo_modify|thermo_style|thermo|timestep|uncompute|undump|unfix|units|velocity|write_data|write_dump|write_restart|nvt|wall\\.*|ave\\.*)\\b'
         'name': 'support.function.builtin.lammps'
     }
     {
@@ -271,7 +271,7 @@
             'include': '$self'
         }]
     'string_single_pure':
-        'comment': 'NOTE: This includes unquoted strings, which is probably a bad idea. This is not finished, it is missing in parts like variable string ...'
+        'comment': 'NOTE: This includes unquoted strings, which is probably a bad idea. This is not finished, it is missing in parts like variable string ... FIXME: The math is missing the dollar variables'
         'match': '((?<=print )|(?<= string ))\s*[^ \'"#&]+'
         'begin': '((?<=print )|(?<= string ))\s*\''
         'end': '\''
