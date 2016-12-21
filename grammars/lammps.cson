@@ -71,9 +71,15 @@
         'name': 'keyword.operator.assignment'
     }
     {
-        'comment': 'Path NOTE: Experimental also It should allow spaces \\s and have proper color'
-        'match': '(?<= )(~|/|\\.)[a-zA-Z0-9_\\-\\./]*'
-        'name': 'constant.numeric'
+        'comment': 'Path NOTE: Experimental also It should allow spaces \\s and have proper color, original pattern (?<= )(~|/|\\.)[a-zA-Z0-9_\\-\\./]*'
+        'begin': '(?<= )(~|/|\\.)'
+        'end': '[ \n]'
+        'name': 'constant.numeric.notreally'
+        'patterns': [
+            {
+                'include': '#variables_dollar'
+            }
+        ]
     }
 
 
